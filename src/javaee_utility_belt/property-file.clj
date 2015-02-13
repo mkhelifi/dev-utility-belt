@@ -7,18 +7,29 @@
     (split-lines
       (slurp file)))))
 
+(defn save-properties [filename properties]
+  (spit filename (str "# List in alphabetic order\n" (join "\n" properties))))
+
 (defn merge-properties [file1 file2]
-  (let [props1 (load-properties file1) props2 (load-properties file2) size-props1 (count props1) size-props2 (count props2)]
-    (loop [i 0 j 0 merged-properties []]
-      (if (if (>= i j) (= i size-props1) (= j size-props2))
-        merged-properties
-        (let [c (compare (nth props1 i) (nth props2 j))]
-        (if (= c 0)
-          (recur (if (< i size-props1) (inc i) i)
-                 (if (< j size-props2) (inc j) j)
-                 (conj merged-properties (nth props1 i)))
-          (if (< c 0)
-            (recur (if (< i size-props1) (inc i) i) j
-                   (conj merged-properties (nth props1 i)))
-            (recur i (if (< j size-props2) (inc j) j)
-                   (conj merged-properties (nth props2 j))))))))))
+  (loop [props1 (load-properties file1) props2 (load-properties file2) merged-properties []]
+    (if (empty? props1)
+      (concat merged-properties props2)
+      (if (empty? props2)
+        (concat merged-properties props1)
+        (let [c (compare (first props1) (first props2))]
+          (if (= c 0)
+            (recur (rest props1) (rest props2) (conj merged-properties (first props1)))
+            (if (< c 0)
+              (recur (rest props1) props2 (conj merged-properties (first props1)))
+              (recur props1 (rest props2) (conj merged-properties (first props2))))))))))
+
+(defn group-by-alphabet [properties]
+  (let [sorted-properties (sort properties)]
+    (loop [letter "" sorted-properties sorted-properties grouped-properties []]
+      (if (= (count sorted-properties) 0)
+        grouped-properties
+        (if (= letter (subs (first sorted-properties) 0 1))
+          (recur letter (rest sorted-properties) (conj grouped-properties (first sorted-properties)))
+          (recur (subs (first sorted-properties) 0 1) sorted-properties (conj grouped-properties (str "\n# " (subs (first sorted-properties) 0 1)))))))))
+
+
