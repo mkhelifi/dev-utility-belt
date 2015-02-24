@@ -24,7 +24,7 @@
       (if (empty? props2)
         (concat merged-properties props1)
         (let [c (compare (first props1) (first props2))]
-          (if (= c 0)
+          (if (zero? c)
             (recur (rest props1)
                    (rest props2)
                    (conj merged-properties (first props1)))
@@ -35,6 +35,9 @@
               (recur props1
                      (rest props2)
                      (conj merged-properties (first props2))))))))))
+
+(defn replace-properties [file1 file2]
+  "Replaces the values of the first file by the equivalent values of the second file")
 
 (defn group-by-alphabet [properties]
   "Groups properties alphabetically for better manageability."
