@@ -2,6 +2,7 @@
   (:require [clojure.string :refer :all]))
 
 (defn load-properties [file]
+  "Load the file containing properties, remove blank lines and comments and return a list of properties"
   (filterv (fn [line] (not (= 0 (.indexOf line "#"))))
   (filterv (fn [line] (not (blank? line)))
     (split-lines
