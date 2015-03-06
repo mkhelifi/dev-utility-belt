@@ -1,4 +1,5 @@
 (ns javaee-utility-belt.core
+  (:require [javaee-utility-belt.property-file :refer (merge-properties replace-properties)])
   (:gen-class))
 
 (defn -main
