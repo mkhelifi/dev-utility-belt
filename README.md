@@ -25,7 +25,9 @@ It will create the directory `javaee-utility-belt` in the current location. Ente
 
 The REPL starts with all utility functions available by default in the namespace. You can simply type the functions or use the autocomplete (Tab) to find the one that fits your needs. Example:
 
-    javaee-utility-belt.core=> (replace-properties "Resources.properties" "Resources_pt.properties" "result.properties")
+    javaee-utility-belt.core=> (replace-properties "Resources.properties"
+                          #_=>                     "Resources_pt.properties" 
+                          #_=>                     "result.properties")
 
 The function `replace-properties` replaces the properties of a property file by the properties of another property file and saves the result in another property file. In the example above, the files are in the same directory where the REPL started. If the files are in another directory, you have to inform the complete path to them.
 
