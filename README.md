@@ -12,7 +12,22 @@ This project is just starting. So, there is no installation package at the momen
 
 ## Usage
 
-We assume you already have JDK 8 and Leiningen installed and configured. We also assume you have basic knowledge about Clojure programming language to write commands syntactically correct in the REPL.
+We assume you already have JDK 8, Git and Leiningen installed and configured. We also assume you have basic knowledge about the Clojure programming language to write commands syntactically correct in the REPL. Follow the steps below to use the tool:
+
+Clone the repository locally:
+    
+    #> git clone https://github.com/htmfilho/javaee-utility-belt.git
+
+It will create the directory `javaee-utility-belt` in the current location. Enter in the directory and start the REPL:
+
+    #> cd javaee-utility-belt
+    #> lein repl
+
+The REPL starts with all utility functions available by default in the namespace. You can simply type the functions or use the autocomplete (Tab) to find the one that fits your needs. Example:
+
+    javaee-utility-belt.core=> (replace-properties "Resources.properties" "Resources_pt.properties" "result.properties")
+
+The function `replace-properties` replaces the properties of a property file by the properties of another property file and saves the result in another property file. In the example above, the files are in the same directory where the REPL started. If the files are in another directory, you have to inform the complete path to them.
 
 ## License
 
