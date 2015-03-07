@@ -29,7 +29,7 @@ The REPL starts with all utility functions available by default in the namespace
                           #_=>                     "Resources_pt.properties" 
                           #_=>                     "result.properties")
 
-The function `replace-properties` replaces the properties of a property file by the properties of another property file and saves the result in another property file. In the example above, the files are in the same directory where the REPL started. If the files are in another directory, you have to inform the complete path to them.
+The function `replace-properties` replaces the properties of a property file by the properties of another property file and saves the result in another property file. In the example above, the files are in the same directory where the REPL started. If the files are in another directory, you have to inform the complete path to them. Note that you can break the command in several lines while the expression is not complete, in this case, while the closing parentheses is not there yet. When you finally put the closing parentheses in the last line and hit Enter the function will execute. The file `result.properties` is created in the current directory.
 
 ## License
 
