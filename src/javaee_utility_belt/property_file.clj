@@ -84,6 +84,9 @@
                      (rest other-props)
                      (conj merged-properties (first other-props))))))))))
 
+(defn organize-alphabetically [file]
+  (save-properties-file file (group-by-alphabet (load-properties-file file))))
+
 (defn merge-properties [original-file to-merge-file new-file]
   (save-properties-file new-file
     (group-by-alphabet (merge-property-files original-file to-merge-file))))
