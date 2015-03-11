@@ -1,4 +1,4 @@
-(ns javaee-utility-belt.log-file
+(ns jub.log-file
   (:require [clojure.string :refer (blank? join split split-lines)]))
 
 (defn- conj-record [records record]

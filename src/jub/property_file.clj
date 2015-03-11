@@ -1,4 +1,4 @@
-(ns javaee-utility-belt.property-file
+(ns jub.property-file
   (:require [clojure.string :refer (blank? join split split-lines)]))
 
 (defn- load-properties-file [file]

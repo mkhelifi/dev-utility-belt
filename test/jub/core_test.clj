@@ -1,6 +1,6 @@
-(ns javaee-utility-belt.core-test
+(ns jub.core-test
   (:require [clojure.test :refer :all]
-            [javaee-utility-belt.core :refer :all]))
+            [jub.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."
