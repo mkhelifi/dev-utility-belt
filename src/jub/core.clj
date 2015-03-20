@@ -4,4 +4,4 @@
             [jub.datasource    :refer (migrate-db)])
   (:gen-class))
 
-(def n migrate-db)
+(migrate-db)

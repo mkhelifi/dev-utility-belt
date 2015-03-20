@@ -7,10 +7,9 @@
                :user        "jub_user"
                :password    "senhas"})
 
-(def joplin-target {:db {:type :sql,
-                         :url (str "jdbc:mysql:" (get mysql-db :subname)
-                                   "?user="      (get mysql-db :user)
-                                   "&password="  (get mysql-db :password))}
+(def joplin-target {:db {:type :jdbc :url (str "jdbc:mysql:" (get mysql-db :subname)
+                                              "?user="      (get mysql-db :user)
+                                              "&password="  (get mysql-db :password))}
                     :migrator "resources/migrators/sql"})
 
 (defn migrate-db []
