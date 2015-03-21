@@ -1,15 +1,17 @@
 (ns jub.datasource
-  (:require [clojure.java.jdbc :as jdbc]
-            [joplin.core       :as joplin]))
+  (:require [clojure.java.jdbc    :as jdbc]
+            [joplin.core          :as joplin]
+            [joplin.sql.database]))
 
 (def mysql-db {:subprotocol "mysql"
                :subname     "//localhost:3306/jub"
                :user        "jub_user"
                :password    "senhas"})
 
-(def joplin-target {:db {:type :sql, :url (str "jdbc:mysql:" (get mysql-db :subname)
-                                               "?user="      (get mysql-db :user)
-                                               "&password="  (get mysql-db :password))}
+(def joplin-target {:db {:type :sql
+                         :url (str "jdbc:mysql:" (get mysql-db :subname)
+                                   "?user="      (get mysql-db :user)
+                                   "&password="  (get mysql-db :password))}
                     :migrator "resources/migrators/sql"})
 
 (defn migrate-mysql-db []

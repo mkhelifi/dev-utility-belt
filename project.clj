@@ -6,7 +6,9 @@
   :dependencies [[org.clojure/clojure        "1.6.0" ]
                  [org.clojure/java.jdbc      "0.3.6" ]
                  [mysql/mysql-connector-java "5.1.25"]
-                 [joplin.core                "0.2.9" ]]
+                 [honeysql                   "0.5.1" ]
+                 [joplin.core                "0.2.9" ]
+                 [joplin.jdbc                "0.2.9" ]]
   :main ^:skip-aot jub.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
