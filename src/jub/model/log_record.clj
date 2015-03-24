@@ -2,20 +2,22 @@
   (:require [clojure.java.jdbc :as    jdbc]
             [honeysql.core     :as    sql]
             [honeysql.helpers  :refer :all]
-            [jub.datasource    :refer (db-connection)]))
+            [jub.datasource    :refer (mysql-db-spec)]))
 
-(defn insert-record []
-  (jdbc/with-db-connection
-    (datasource/db-connection)
-    (insert-into)))
+(defn create [record]
+    (jdbc/insert! mysql-db-spec :log_record
+                    record))
+
+(create {:id "KJSUSIKQJWUSYBCNHSUIMASJSHDYEU74"
+                     :filename "server.log"
+                     :instant  "2015-03-24"
+                     :level    "INFO"
+                     :name     "Test"
+                     :thread   "Threads"
+                     :message  "Message"})
 
 (defn find-all []
-  (let [sql {:select :*
-             :from   :log_record}]))
+  (let [query {:select [:*] :from [:log-record]}]
+      (jdbc/query mysql-db-spec (sql/format query))))
 
-(defn find-by-interval [begin end]
-  (let [sql {:select :*
-             :from   :log_record
-             :where  [:and
-                      [:>= :l.instant begin]
-                      [:<= :l.instant end]]}]))
+(find-all)
