@@ -1,5 +1,7 @@
 (ns jub.log-file
-  (:require [clojure.string :refer (blank? join split split-lines)]))
+  (:require [clojure.string            :refer (blank? join split split-lines)]
+            [jub.repository.log-record :as rep]
+            [jub.utils                 :as utils]))
 
 (def log-levels #"DEBUG|ERROR|INFO|SEVERE|WARNING|WARN")
 
@@ -31,7 +33,7 @@
                          :thread    (enclosed-within record :parentheses)
                          :name      (enclosed-within record :brackets)
                          :level     (re-find log-levels record)
-                         :timestamp (re-find #"\d\d:\d\d:\d\d,\d\d\d" record))))
+                         :instant   (re-find #"\d\d:\d\d:\d\d,\d\d\d" record))))
 
 (defn conj-record [records record]
   "Adds a record in a collection of records but rejecting nil values."
@@ -56,18 +58,17 @@
                    line
                    (conj-record records record))))))))
 
-(defn all-log-records [log-files]
-  "Takes a collection of log files and returns a structured representation of all records in a vector of maps."
-  (reduce (fn [records log-file]
-            (conj records (log-records log-file))) [] log-files))
-
 (defn scan-log-directory [path]
   "Scans the log directory and returns a sequence of files"
   (let [directory (java.io.File. path)
         files     (.listFiles directory)]
     (map #(.getAbsolutePath %) (filter #(.isFile %) files))))
 
-(count (scan-log-directory "test/logs"))
+
+(defn persist-log-records [log-file]
+  (rep/create (map #(assoc % :filename (utils/filename-from-path log-file)) (log-records log-file))))
+
+(persist-log-records "test/logs/server.log")
 
 (defn filter-by-level [log-file level]
   "Goes through the log records and returns the ones with the informed log level."
