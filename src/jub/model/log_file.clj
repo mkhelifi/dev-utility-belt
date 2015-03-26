@@ -64,9 +64,10 @@
         files     (.listFiles directory)]
     (map #(.getAbsolutePath %) (filter #(.isFile %) files))))
 
-
 (defn persist-log-records [log-file]
-  (rep/create (map #(assoc % :filename (utils/filename-from-path log-file)) (log-records log-file))))
+  (for [record (map #(assoc % :filename (utils/filename-from-path log-file))
+                    (log-records log-file))]
+    (rep/create record)))
 
 (persist-log-records "test/logs/server.log")
 
