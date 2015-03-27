@@ -33,7 +33,8 @@
                          :thread    (enclosed-within record :parentheses)
                          :name      (enclosed-within record :brackets)
                          :level     (re-find log-levels record)
-                         :instant   (re-find #"\d\d:\d\d:\d\d,\d\d\d" record))))
+                         :instant   (.parse (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm:ss,SSS")
+                                            (re-find #"\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d,\d\d\d" record)))))
 
 (defn conj-record [records record]
   "Adds a record in a collection of records but rejecting nil values."
@@ -69,7 +70,7 @@
                     (log-records log-file))]
     (rep/create record)))
 
-(persist-log-records "test/logs/server.log")
+(persist-log-records "test/logs/server.log.2014-10-28")
 
 (defn filter-by-level [log-file level]
   "Goes through the log records and returns the ones with the informed log level."
