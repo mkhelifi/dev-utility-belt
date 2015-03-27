@@ -70,8 +70,6 @@
                     (log-records log-file))]
     (rep/create record)))
 
-(persist-log-records "test/logs/server.log.2014-10-28")
-
 (defn filter-by-level [log-file level]
   "Goes through the log records and returns the ones with the informed log level."
   (filter #(= level (get % :level)) (log-records log-file)))
