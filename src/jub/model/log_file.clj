@@ -1,5 +1,9 @@
 (ns jub.log-file
-  (:require [clojure.string :refer (blank? join split split-lines)]))
+  (:require [clojure.string            :refer (blank? join split split-lines)]
+            [jub.repository.log-record :as rep]
+            [jub.utils                 :as utils]))
+
+(def log-levels #"DEBUG|ERROR|INFO|SEVERE|WARNING|WARN")
 
 (defn enclosed-within [sentence closure]
   "Returns the content inside of parentheses, brackets or braces found within a sentence."
@@ -28,8 +32,9 @@
     (assoc mapped-record :message   (.substring record (+ (.indexOf record ")") 2))
                          :thread    (enclosed-within record :parentheses)
                          :name      (enclosed-within record :brackets)
-                         :level     (re-find #"DEBUG|ERROR|INFO|SEVERE|WARNING" record)
-                         :timestamp (re-find #"\d\d:\d\d:\d\d,\d\d\d" record))))
+                         :level     (re-find log-levels record)
+                         :instant   (.parse (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm:ss,SSS")
+                                            (re-find #"\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d,\d\d\d" record)))))
 
 (defn conj-record [records record]
   "Adds a record in a collection of records but rejecting nil values."
@@ -45,7 +50,7 @@
     (if (empty? lines)
       (conj-record records record)
       (let [line (first lines)]
-        (let [level (re-find #"DEBUG|ERROR|INFO|SEVERE|WARNING" line)]
+        (let [level (re-find log-levels line)]
           (if (nil? level)
             (recur (rest lines)
                    (str record "\n" line)
@@ -54,7 +59,22 @@
                    line
                    (conj-record records record))))))))
 
-(defn pretty-output [text]
+(defn scan-log-directory [path]
+  "Scans the log directory and returns a sequence of files"
+  (let [directory (java.io.File. path)
+        files     (.listFiles directory)]
+    (map #(.getAbsolutePath %) (filter #(.isFile %) files))))
+
+(defn persist-log-records [log-file]
+  (for [record (map #(assoc % :filename (utils/filename-from-path log-file))
+                    (log-records log-file))]
+    (rep/create record)))
+
+(defn filter-by-level [log-file level]
+  "Goes through the log records and returns the ones with the informed log level."
+  (filter #(= level (get % :level)) (log-records log-file)))
+
+(defn print-feedback [text]
   "Formats a text to be beautifully printed by the repl."
   (loop [out (split text #"\n")]
     (if (empty? out)
