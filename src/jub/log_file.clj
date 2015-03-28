@@ -54,14 +54,15 @@
                    line
                    (conj-record records record))))))))
 
-(defn filter-by-level [log-file level]
-  "Goes through the log records and returns the ones with the informed log level."
-  (filter #(= level (get % :level)) (log-records log-file)))
-
-(defn print-feedback [text]
+(defn pretty-output [text]
+  "Formats a text to be beautifully printed by the repl."
   (loop [out (split text #"\n")]
     (if (empty? out)
-      ""
+      "--------------"
       (let [to-print (first out)]
         (println to-print)
         (recur (rest out))))))
+
+(defn filter-by-level [log-file level]
+  "Goes through the log records and returns the ones with the informed log level."
+  (filter #(= level (get % :level)) (log-records log-file)))
