@@ -1,4 +1,4 @@
-(ns jub.log-file
+(ns jub.model.log-file
   (:require [clojure.string            :refer (blank? join split split-lines)]
             [jub.repository.log-record :as rep]
             [jub.utils                 :as utils]))
