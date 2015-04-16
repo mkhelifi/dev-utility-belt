@@ -28,7 +28,5 @@
 
 (def pooled-db (delay (connection-pool)))
 
-(defn db-connection [] @pooled-db)
-
 (defn unique-id []
   (.replace (.toUpperCase (str (java.util.UUID/randomUUID))) "-" ""))
