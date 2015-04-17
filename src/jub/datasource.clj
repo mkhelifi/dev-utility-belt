@@ -4,11 +4,15 @@
             [joplin.jdbc.database])
   (:import com.zaxxer.hikari.HikariDataSource))
 
-(def db-spec {:classname   "com.mysql.jdbc.Driver"
-              :subprotocol "mysql"
-              :subname     "//localhost:3306/jub"
-              :user        "jub_user"
-              :password    "senhas"})
+(defn create-db-spec [& {:keys [classname subprotocol subname user password]
+                         :or {classname "com.mysql.jdbc.Driver" subprotocol "mysql" subname "//localhost:3306/jub" user "" password ""}}]
+  {:classname   classname
+   :subprotocol subprotocol
+   :subname     subname
+   :user        user
+   :password    password})
+
+(def db-spec (create-db-spec :user "jub_user" :password "senhas"))
 
 (def joplin-target {:db {:type :sql
                          :url (str "jdbc:mysql:" (:subname  db-spec)

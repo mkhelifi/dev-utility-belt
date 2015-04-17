@@ -6,7 +6,11 @@
             [jub.repository.metadata :refer (all-tables)]))
 
 (defn count-records [db-spec table]
-  (jdbc/query db-spec (-> (select :%count.*) (from (keyword table)) sql/format)))
+  ((first (jdbc/query db-spec (-> (select :%count.*) (from (keyword table)) sql/format)))
+   (keyword "count(*)")))
 
 (defn empty-tables [db-spec]
-  (map #(count-records db-spec %) (all-tables db-spec)))
+  (let [tables     (all-tables db-spec)
+        quantities (map #(count-records db-spec %) tables)]
+    (filter #(not (nil? %))
+            (map #(when (= %1 0) %2) quantities tables))))
