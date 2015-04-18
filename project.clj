@@ -5,6 +5,7 @@
             :url "https://www.apache.org/licenses/LICENSE-2.0"}
   :dependencies [[org.clojure/clojure        "1.6.0" ] ; Latest stable vertion of Clojure.
                  [org.clojure/java.jdbc      "0.3.6" ] ; Clojure JDBC wrapper
+                 [org.xerial/sqlite-jdbc     "3.7.2" ] ; SQLite JDBC Driver
                  [mysql/mysql-connector-java "5.1.25"] ; MySQL JDBC Driver
                  [honeysql                   "0.5.1" ] ; SQL as Clojure data structures
                  [joplin.core                "0.2.9" ] ; Database migration
