@@ -1,4 +1,4 @@
-(ns jub.datasource
+(ns dub.datasource
   (:require [clojure.java.jdbc    :as jdbc]
             [joplin.core          :as joplin]
             [joplin.jdbc.database])

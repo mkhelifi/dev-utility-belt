@@ -1,4 +1,4 @@
-(ns jub.utils)
+(ns dub.utils)
 
 (defn filename-from-path [path]
   "Identifies and returns a file name present in a path."

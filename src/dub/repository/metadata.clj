@@ -1,6 +1,6 @@
-(ns jub.repository.metadata
+(ns dub.repository.metadata
   (:require [clojure.java.jdbc :as    jdbc]
-            [jub.datasource    :refer (db-spec)]))
+            [dub.datasource    :refer (db-spec)]))
 
 (defn all-tables
   [db-spec]

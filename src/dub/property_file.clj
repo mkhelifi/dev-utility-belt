@@ -1,4 +1,4 @@
-(ns jub.property-file
+(ns dub.property-file
   (:require [clojure.string :refer (blank? join split split-lines)]))
 
 (defn load-properties-file [file]

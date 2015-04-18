@@ -1,8 +1,8 @@
-(ns jub.repository.log-record
+(ns dub.repository.log-record
   (:require [clojure.java.jdbc :as    jdbc]
             [honeysql.core     :as    sql]
             [honeysql.helpers  :refer :all]
-            [jub.datasource    :refer (db-spec unique-id)]))
+            [dub.datasource    :refer (db-spec unique-id)]))
 
 (defn create [record]
     (jdbc/insert! db-spec :log_record (assoc record :id (unique-id))))

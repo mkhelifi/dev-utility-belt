@@ -1,9 +1,9 @@
-(ns jub.repository.database
+(ns dub.repository.database
   (:require [clojure.java.jdbc       :as    jdbc]
             [honeysql.core           :as    sql]
             [honeysql.helpers        :refer :all]
-            [jub.datasource          :refer (db-spec)]
-            [jub.repository.metadata :refer (all-tables)]))
+            [dub.datasource          :refer (db-spec)]
+            [dub.repository.metadata :refer (all-tables)]))
 
 (defn count-records [db-spec table]
   ((first (jdbc/query db-spec (-> (select :%count.*) (from (keyword table)) sql/format)))

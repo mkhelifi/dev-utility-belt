@@ -1,6 +1,6 @@
-(ns jub.log-file-test
+(ns dub.log-file-test
   (:require [clojure.test :refer :all]
-            [jub.model.log-file :refer :all]))
+            [dub.model.log-file :refer :all]))
 
 (deftest enclosed-within-test
   (testing "Checks whether the content of the most comprehensive closure is returned correctly,

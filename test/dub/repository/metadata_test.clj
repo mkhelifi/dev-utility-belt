@@ -1,6 +1,6 @@
-(ns jub.repository.metadata-test
+(ns dub.repository.metadata-test
   (:require [clojure.test :refer :all]
-            [jub.repository.metadata :refer :all]))
+            [dub.repository.metadata :refer :all]))
 
 (deftest all-tables-test
   (testing "Checks if the function is returning something from the default database configuration."
