@@ -1,11 +1,10 @@
 (ns dub.datasource
   (:require [clojure.java.jdbc    :as jdbc]
             [joplin.core          :as joplin]
-            [joplin.jdbc.database])
-  (:import com.zaxxer.hikari.HikariDataSource))
+            [joplin.jdbc.database]))
 
 (defn create-db-spec [& {:keys [classname subprotocol subname user password]
-                         :or {classname "com.mysql.jdbc.Driver" subprotocol "mysql" subname "//localhost:3306/jub" user "" password ""}}]
+                         :or {classname "com.mysql.jdbc.Driver" subprotocol "mysql" subname "//localhost:3306/dub" user "" password ""}}]
   {:classname   classname
    :subprotocol subprotocol
    :subname     subname
