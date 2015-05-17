@@ -4,7 +4,13 @@
 
 (defn project-files [project-path]
   "Returns a sequence of absolute paths to all files in the project."
-  project-path)
+  (let [files (.listFiles (java.io.File. project-path))]
+    (flatten 
+      (filter #(not (.contains % "/."))
+              (map #(if (and (.isDirectory %) (not (.isHidden %)))
+                      (project-files (.getAbsolutePath %))
+                      (.getAbsolutePath %))
+                   files)))))
 
 (defn filter-extensions [files extensions]
   "Takes a sequence of files and return only the ones with the informed extensions."
